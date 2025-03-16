@@ -62,7 +62,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest ./tests/
+          pytest ./src/
 
   deploy:
     name: Deploy
