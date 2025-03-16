@@ -6,7 +6,7 @@ resource "aws_lambda_function" "insert_student_data" {
   role          = aws_iam_role.lambda_exec_role.arn
   filename      = "../src/insertStudentData.zip"
 
-  source_code_hash = filebase64sha256("../src/insertStudentData.zip")
+  source_code_hash = filebase64sha256("${path.module}/../src/insertStudentData.zip")
 
   environment {
     variables = {
@@ -23,7 +23,7 @@ resource "aws_lambda_function" "get_students" {
   role          = aws_iam_role.lambda_exec_role.arn
   filename      = "../src/getStudents.zip"
 
-  source_code_hash = filebase64sha256("../src/getStudents.zip")
+  source_code_hash = filebase64sha256("${path.module}/../src/getStudents.zip")
 
   environment {
     variables = {

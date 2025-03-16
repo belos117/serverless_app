@@ -69,7 +69,7 @@ resource "aws_s3_object" "html" {
   source       = "../static/index.html"
   content_type = "text/html"
 
-  etag = filemd5("../static/index.html")
+  etag = filemd5("${path.module}/../static/index.html")
 }
 
 # Generate JavaScript file with API endpoint
