@@ -1,12 +1,11 @@
-# Lambda Function for Inserting Student Data
 resource "aws_lambda_function" "insert_student_data" {
   function_name = "insertStudentData"
   handler       = "insertStudentData.lambda_handler"
   runtime       = "python3.12"
   role          = aws_iam_role.lambda_exec_role.arn
-  filename      = "../src/insertStudentData.zip"
+  filename      = "./src/insertStudentData.zip" # Reference pre-existing ZIP file
 
-  source_code_hash = filebase64sha256("${path.module}/../src/insertStudentData.zip")
+  source_code_hash = "./src/insertStudentData.zip"
 
   environment {
     variables = {
@@ -15,15 +14,14 @@ resource "aws_lambda_function" "insert_student_data" {
   }
 }
 
-# Lambda Function for Retrieving Student Data
 resource "aws_lambda_function" "get_students" {
   function_name = "getStudents"
   handler       = "getStudents.lambda_handler"
   runtime       = "python3.12"
   role          = aws_iam_role.lambda_exec_role.arn
-  filename      = "../src/getStudents.zip"
+  filename      = "./src/getStudents.zip" # Reference pre-existing ZIP file
 
-  source_code_hash = filebase64sha256("${path.module}/../src/getStudents.zip")
+  source_code_hash = "./src/getStudents.zip"
 
   environment {
     variables = {
