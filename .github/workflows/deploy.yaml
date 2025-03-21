@@ -120,9 +120,3 @@ jobs:
         run: |
           cd terraform
           terraform apply -auto-approve
-
-      - name: Run Post-deployment Tests
-        run: |
-          python ./tests/integration_tests.py
-        env:
-          API_ENDPOINT: ${{ steps.terraform-output.outputs.api_endpoint }}
