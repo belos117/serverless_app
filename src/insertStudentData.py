@@ -5,6 +5,8 @@ from decimal import Decimal
 
 def lambda_handler(event, context):
     try:
+        print("Received event:", json.dumps(event))  # Log the incoming event
+
         # Parse the incoming JSON body from the API Gateway event
         body = json.loads(event['body'])
         

@@ -99,7 +99,7 @@ jobs:
 
       - name: Package Lambda functions
         run: |
-          cd src
+          cd terraform/src
           zip -j insertStudentData.zip insertStudentData.py
           zip -j getStudents.zip getStudents.py            
       
