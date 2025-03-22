@@ -66,7 +66,7 @@ resource "aws_s3_bucket_versioning" "static_website_versioning" {
 resource "aws_s3_object" "html" {
   bucket       = aws_s3_bucket.static_website.id
   key          = "index.html"
-  source       = "/static/index.html"
+  source       = "${path.module}/../static/index.html"  # Use relative path
   content_type = "text/html"
 }
 
