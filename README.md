@@ -37,7 +37,7 @@ This project is a serverless application that allows users to save and view stud
 - Terraform
 - Python 3.12
 
-## Setup
+### Setup
 
 1. **Clone the repository:**
 
