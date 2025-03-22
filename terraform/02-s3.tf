@@ -167,7 +167,6 @@ resource "local_file" "index_html" {
                     <!-- Student data will be displayed here -->
                 </tbody>
             </table>
-            <h3>Programmed by Henk</h3>
         </div>
     </div>
 
