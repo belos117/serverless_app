@@ -12,7 +12,7 @@ document.getElementById("savestudent").onclick = function(){
     $.ajax({
         url: API_ENDPOINT,
         type: 'POST',
-        data:  JSON.stringify(inputData),
+        data: JSON.stringify(inputData), // Ensure inputData is stringified
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
             document.getElementById("studentSaved").innerHTML = "Student Data Saved!";
