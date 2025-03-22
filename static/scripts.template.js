@@ -12,13 +12,12 @@ document.getElementById("savestudent").onclick = function(){
     $.ajax({
         url: API_ENDPOINT,
         type: 'POST',
-        data: JSON.stringify(inputData), // Ensure inputData is stringified
+        data:  JSON.stringify(inputData),
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
             document.getElementById("studentSaved").innerHTML = "Student Data Saved!";
         },
-        error: function (xhr, status, error) {
-            console.error("Error saving student data:", xhr.responseText);
+        error: function () {
             alert("Error saving student data.");
         }
     });
@@ -41,8 +40,7 @@ document.getElementById("getstudents").onclick = function(){
                     </tr>");
             });
         },
-        error: function (xhr, status, error) {
-            console.error("Error retrieving student data:", xhr.responseText);
+        error: function () {
             alert("Error retrieving student data.");
         }
     });

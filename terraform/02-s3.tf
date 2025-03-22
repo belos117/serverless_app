@@ -75,31 +75,49 @@ resource "local_file" "scripts_js" {
   content  = <<-EOT
 const API_ENDPOINT = "${aws_api_gateway_stage.gateway_stage.invoke_url}/student";
 
-async function getStudents() {
-    try {
-        const response = await fetch(API_ENDPOINT, {
-            method: 'GET'
-        });
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error:', error);
-    }
+// AJAX POST request to save student data
+document.getElementById("savestudent").onclick = function(){
+    var inputData = {
+        "studentid": $('#studentid').val(),
+        "name": $('#name').val(),
+        "programme": $('#programme').val(),
+        "level": $('#level').val()
+    };
+    $.ajax({
+        url: API_ENDPOINT,
+        type: 'POST',
+        data:  JSON.stringify(inputData),
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            document.getElementById("studentSaved").innerHTML = "Student Data Saved!";
+        },
+        error: function () {
+            alert("Error saving student data.");
+        }
+    });
 }
 
-async function insertStudent(studentData) {
-    try {
-        const response = await fetch(API_ENDPOINT, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(studentData)
-        });
-        return await response.json();
-    } catch (error) {
-        console.error('Error:', error);
-    }
+// AJAX GET request to retrieve all students
+document.getElementById("getstudents").onclick = function(){  
+    $.ajax({
+        url: API_ENDPOINT,
+        type: 'GET',
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            $('#studentTable tr').slice(1).remove();
+            jQuery.each(response, function(i, data) {          
+                $("#studentTable").append("<tr> \
+                    <td>" + data['studentid'] + "</td> \
+                    <td>" + data['name'] + "</td> \
+                    <td>" + data['programme'] + "</td> \
+                    <td>" + data['level'] + "</td> \
+                    </tr>");
+            });
+        },
+        error: function () {
+            alert("Error retrieving student data.");
+        }
+    });
 }
 EOT
   filename = "../static/scripts.js"
