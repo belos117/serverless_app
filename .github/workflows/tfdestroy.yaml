@@ -10,7 +10,7 @@ jobs:
     env:
       AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
       AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-      TF_TOKEN: ${{ secrets.TF_TOKEN }}
+      TERRAFORM_LOGIN: ${{ secrets.TERRAFORM_LOGIN }}
       AWS_REGION: us-east-1
 
     steps:
@@ -32,7 +32,7 @@ jobs:
       uses: hashicorp/setup-terraform@v2
       with: 
         terraform_wrapper: false
-        cli_config_credentials_token: ${{ secrets.TF_TOKEN }}
+        cli_config_credentials_token: ${{ secrets.TERRAFORM_LOGIN }}
 
     - name: Terraform Destroy
       id:   destroy
