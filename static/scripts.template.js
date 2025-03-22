@@ -17,7 +17,8 @@ document.getElementById("savestudent").onclick = function(){
         success: function (response) {
             document.getElementById("studentSaved").innerHTML = "Student Data Saved!";
         },
-        error: function () {
+        error: function (xhr, status, error) {
+            console.error("Error saving student data:", xhr.responseText);
             alert("Error saving student data.");
         }
     });
@@ -40,7 +41,8 @@ document.getElementById("getstudents").onclick = function(){
                     </tr>");
             });
         },
-        error: function () {
+        error: function (xhr, status, error) {
+            console.error("Error retrieving student data:", xhr.responseText);
             alert("Error retrieving student data.");
         }
     });

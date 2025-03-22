@@ -13,7 +13,7 @@ def lambda_handler(event, context):
         # Extract values from the parsed JSON
         student_id = body['studentid']
         name = body['name']
-        student_programme = body['programme']
+        programme = body['programme']
         level = body['level']
         
         # Create DynamoDB resource
@@ -25,7 +25,7 @@ def lambda_handler(event, context):
             Item={
                 'studentid': student_id,
                 'name': name,
-                'programme': student_programme,
+                'programme': programme,
                 'level': level
             }
         )
@@ -38,7 +38,7 @@ def lambda_handler(event, context):
                 'Access-Control-Allow-Headers': 'Content-Type',
                 'Access-Control-Allow-Methods': 'POST,OPTIONS'
             },
-            'body': json.dumps({'message': 'Student data saved successfully!'})
+            'body': json.dumps({'message': 'Student data saved successfully'})
         }
         
     except Exception as e:
