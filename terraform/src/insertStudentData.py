@@ -1,7 +1,6 @@
 import json
 import boto3
 import os
-from decimal import Decimal
 
 def lambda_handler(event, context):
     try:
@@ -11,7 +10,7 @@ def lambda_handler(event, context):
         # Extract values from the parsed JSON
         student_id = body['studentid']
         name = body['name']
-        student_programme = body['programme']
+        programme = body['programme']
         level = body['level']
         
         # Create DynamoDB resource
@@ -23,7 +22,7 @@ def lambda_handler(event, context):
             Item={
                 'studentid': student_id,
                 'name': name,
-                'programme': student_programme,
+                'programme': programme,
                 'level': level
             }
         )
