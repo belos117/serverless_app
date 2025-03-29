@@ -9,7 +9,7 @@ table = dynamodb.Table('studentData')
 # Define the handler function that the Lambda service will use as an entry point
 def lambda_handler(event, context):
     # Extract values from the event object we got from the Lambda service and store in variables
-    student_id = event['studentid']
+    studentid = event['studentid']
     name = event['name']
     programme = event['programme']
     level = event['level']
@@ -17,7 +17,7 @@ def lambda_handler(event, context):
     # Write student data to the DynamoDB table and save the response in a variable
     response = table.put_item(
         Item={
-            'studentid': student_id,
+            'studentid': studentid,
             'name': name,
             'programme': programme,
             'level': level
