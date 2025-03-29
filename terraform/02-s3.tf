@@ -134,11 +134,11 @@ resource "local_file" "index_html" {
         <label for="name">Name:</label><br>
         <input type="text" name="name" id="name"><br>
         
-        <label for="class">Class:</label><br>
-        <input type="text" name="class" id="class"><br>
+        <label for="programme">Programme:</label><br>
+        <input type="text" name="programme" id="programme"><br>
         
-        <label for="age">Age:</label><br>
-        <input type="text" name="age" id="age"><br>
+        <label for="level">Level:</label><br>
+        <input type="text" name="level" id="level"><br>
         
         <br>
         <input type="submit" id="savestudent" value="Save Student Data">
@@ -159,8 +159,8 @@ resource "local_file" "index_html" {
                     <tr>
                         <th>Student ID</th>
                         <th>Name</th>
-                        <th>Class</th>
-                        <th>Age</th>
+                        <th>Programme</th>
+                        <th>Level</th>
                     </tr>
                 </thead>
                 <tbody>
