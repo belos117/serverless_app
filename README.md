@@ -31,7 +31,7 @@ This project is a serverless application that allows users to save and view stud
     └── main.tf
 ```
 
-## Prerequisites
+### Prerequisites
 
 - AWS account
 - Terraform
