@@ -85,7 +85,7 @@ resource "aws_api_gateway_integration_response" "options_integration_response" {
   }
 }
 
-# POST method response
+# POST method response - update with complete CORS headers
 resource "aws_api_gateway_method_response" "post_200" {
   rest_api_id = aws_api_gateway_rest_api.student_api.id
   resource_id = aws_api_gateway_resource.student_resource.id
@@ -93,11 +93,13 @@ resource "aws_api_gateway_method_response" "post_200" {
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin"  = true
   }
 }
 
-# GET method response
+# GET method response - update with complete CORS headers
 resource "aws_api_gateway_method_response" "get_200" {
   rest_api_id = aws_api_gateway_rest_api.student_api.id
   resource_id = aws_api_gateway_resource.student_resource.id
@@ -105,8 +107,46 @@ resource "aws_api_gateway_method_response" "get_200" {
   status_code = "200"
 
   response_parameters = {
-    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin"  = true
   }
+}
+
+# Add POST integration response
+resource "aws_api_gateway_integration_response" "post_integration_response" {
+  rest_api_id = aws_api_gateway_rest_api.student_api.id
+  resource_id = aws_api_gateway_resource.student_resource.id
+  http_method = aws_api_gateway_method.post_method.http_method
+  status_code = aws_api_gateway_method_response.post_200.status_code
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'",
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
+
+  depends_on = [
+    aws_api_gateway_integration.post_integration
+  ]
+}
+
+# Add GET integration response
+resource "aws_api_gateway_integration_response" "get_integration_response" {
+  rest_api_id = aws_api_gateway_rest_api.student_api.id
+  resource_id = aws_api_gateway_resource.student_resource.id
+  http_method = aws_api_gateway_method.get_method.http_method
+  status_code = aws_api_gateway_method_response.get_200.status_code
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,POST,OPTIONS'",
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
+
+  depends_on = [
+    aws_api_gateway_integration.get_integration
+  ]
 }
 
 resource "aws_api_gateway_deployment" "deployment" {
@@ -117,6 +157,8 @@ resource "aws_api_gateway_deployment" "deployment" {
     aws_api_gateway_integration.get_integration,
     aws_api_gateway_integration.options_integration,
     aws_api_gateway_integration_response.options_integration_response,
+    aws_api_gateway_integration_response.post_integration_response,
+    aws_api_gateway_integration_response.get_integration_response,
     aws_api_gateway_method_response.post_200,
     aws_api_gateway_method_response.get_200,
     aws_api_gateway_method_response.options_200
