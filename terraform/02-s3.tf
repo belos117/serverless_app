@@ -63,7 +63,7 @@ resource "aws_s3_bucket_versioning" "static_website_versioning" {
 }
 
 resource "local_file" "index_html" {
-  content  = <<-EOT
+  content  =
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,7 +174,6 @@ resource "local_file" "index_html" {
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
 </body>
 </html>
-EOT
   filename = "../static/index.html"
 }
 
