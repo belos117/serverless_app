@@ -206,9 +206,15 @@ document.getElementById("savestudent").onclick = function(){
         contentType: 'application/json; charset=utf-8',
         success: function (response) {
             document.getElementById("studentSaved").innerHTML = "Student Data Saved!";
+            // Clear the form
+            $('#studentid').val('');
+            $('#name').val('');
+            $('#programme').val('');
+            $('#level').val('');
         },
-        error: function () {
-            alert("Error saving student data.");
+        error: function (xhr, status, error) {
+            console.error('Error:', error);
+            alert("Error saving student data: " + error);
         }
     });
 }
