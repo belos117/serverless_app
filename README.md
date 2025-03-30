@@ -1,6 +1,6 @@
 # Serverless Application
 
-This project is a serverless application that allows users to save and view student data using AWS services such as Lambda, API Gateway, DynamoDB, S3, and CloudWatch.
+This project is a serverless application that allows users to save and view student data using AWS services such as Lambda, API Gateway, DynamoDB, S3, CloudFront, and CloudWatch.
 
 ## Project Structure
 
@@ -87,6 +87,24 @@ This project is a serverless application that allows users to save and view stud
 
     Use the "View all Students" button on the static website to retrieve and display all student data.
 
+## Architecture
+
+The application uses the following AWS services:
+- Amazon S3 for static website hosting
+- Amazon CloudFront for secure content delivery
+- Amazon API Gateway for REST API
+- AWS Lambda for serverless computing
+- Amazon DynamoDB for data storage
+- Amazon CloudWatch for monitoring
+
+## Security
+
+The application implements several security measures:
+- CloudFront distribution with HTTPS
+- S3 bucket accessed only through CloudFront
+- API Gateway with CORS configuration
+- IAM roles with least privilege access
+
 ## Testing
 
 Run the tests using pytest:
@@ -98,4 +116,3 @@ pytest ./src/
 ## License
 
 This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
-```

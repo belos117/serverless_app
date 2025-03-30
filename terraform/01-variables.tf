@@ -23,3 +23,9 @@ variable "lambda_exec_role_name" {
   default     = "lambda_exec_role"
 }
 
+variable "environment" {
+  description = "Environment name"
+  default     = "prod"
+  
+}
+
