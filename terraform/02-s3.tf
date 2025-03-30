@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "static_website" {
 resource "aws_s3_bucket_ownership_controls" "bucket_ownership_controls" {
   bucket = aws_s3_bucket.static_website.id
   rule {
-    object_ownership = "BucketOwnerPreferred"
+    object_ownership = "BucketOwnerEnforced"  # Changed from BucketOwnerPreferred
   }
 }
 
@@ -19,16 +19,6 @@ resource "aws_s3_bucket_public_access_block" "public_access_block" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_acl" "acl" {
-  depends_on = [
-    aws_s3_bucket_ownership_controls.bucket_ownership_controls,
-    aws_s3_bucket_public_access_block.public_access_block,
-  ]
-
-  bucket = aws_s3_bucket.static_website.id
-  acl    = "public-read"
-}
-
 resource "aws_s3_bucket_website_configuration" "website_configuration" {
   bucket = aws_s3_bucket.static_website.id
 
@@ -38,6 +28,7 @@ resource "aws_s3_bucket_website_configuration" "website_configuration" {
 }
 
 resource "aws_s3_bucket_policy" "static_website_policy" {
+  depends_on = [aws_s3_bucket_public_access_block.public_access_block]
   bucket = aws_s3_bucket.static_website.id
 
   policy = jsonencode({
@@ -47,10 +38,15 @@ resource "aws_s3_bucket_policy" "static_website_policy" {
         Sid       = "AllowCloudFrontAccess"
         Effect    = "Allow"
         Principal = {
-          AWS = aws_cloudfront_origin_access_identity.oai.iam_arn
+          Service = "cloudfront.amazonaws.com"
         }
         Action   = "s3:GetObject"
         Resource = "${aws_s3_bucket.static_website.arn}/*"
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = aws_cloudfront_distribution.s3_distribution.arn
+          }
+        }
       }
     ]
   })
