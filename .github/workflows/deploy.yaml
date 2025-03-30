@@ -129,6 +129,7 @@ jobs:
       - name: Send Terraform Output Email
         if: success() && github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
+          cd terraform
           python ./scripts/send_terraform_output.py
         env:
           ALARM_EMAIL: ${{ secrets.ALARM_EMAIL }}
