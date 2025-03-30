@@ -67,6 +67,7 @@ jobs:
         run: |
           pytest ./src/
 
+  jobs:
   deploy:
     name: Deploy
     needs: test
@@ -105,7 +106,7 @@ jobs:
           cd terraform/src
           zip -j insertStudentData.zip insertStudentData.py
           zip -j getStudents.zip getStudents.py            
-      
+
       - name: Terraform Init
         run: |
           cd terraform
