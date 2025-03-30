@@ -10,6 +10,9 @@ env:
   AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
   AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
   TERRAFORM_LOGIN: ${{ secrets.TERRAFORM_LOGIN }}
+  ALARM_EMAIL: ${{ secrets.ALARM_EMAIL }}
+  SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+  SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
   AWS_REGION: us-east-1
   TERRAFORM_VERSION: 1.5.7
   PYTHON_VERSION: 3.12
@@ -120,3 +123,14 @@ jobs:
         run: |
           cd terraform
           terraform apply -auto-approve
+        env:
+          TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}
+
+      - name: Send Terraform Output Email
+        if: success() && github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          python ./scripts/send_terraform_output.py
+        env:
+          ALARM_EMAIL: ${{ secrets.ALARM_EMAIL }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
