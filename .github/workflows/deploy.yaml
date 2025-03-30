@@ -67,7 +67,6 @@ jobs:
         run: |
           pytest ./src/
 
-  jobs:
   deploy:
     name: Deploy
     needs: test
