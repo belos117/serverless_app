@@ -2,7 +2,7 @@
 
 A secure, scalable serverless application built on AWS for managing student data. The application provides a web interface for saving and retrieving student information, with automated deployment using GitHub Actions and infrastructure as code using Terraform.
 
-## Features
+### Features
 
 - ✅ Secure static website hosting with CloudFront and HTTPS
 - 📝 Hashicorp Backend to store Terraform state files
