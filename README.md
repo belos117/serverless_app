@@ -1,118 +1,127 @@
-# Serverless Application
+# Serverless Student Management System
 
-This project is a serverless application that allows users to save and view student data using AWS services such as Lambda, API Gateway, DynamoDB, S3, CloudFront, and CloudWatch.
+A secure, scalable serverless application built on AWS for managing student data. The application provides a web interface for saving and retrieving student information, with automated deployment using GitHub Actions and infrastructure as code using Terraform.
 
-## Project Structure
+## Features
 
-```
-.
-├── .github/
-│   └── workflows/
-│       ├── deploy.yaml
-│       └── tfdestroy.yaml
-├── src/
-│   ├── getStudents.py
-│   ├── insertStudentData.py
-│   └── test_getStudents.py
-├── static/
-│   ├── index.html
-│   └── scripts.template.js
-└── terraform/
-    ├── 00-provider.tf
-    ├── 01-variables.tf
-    ├── 02-s3.tf
-    ├── 03-dynamodb.tf
-    ├── 04-iam.tf
-    ├── 05-lambda.tf
-    ├── 06-api.tf
-    ├── 07-cloudwatch.tf
-    ├── 08-sns.tf
-    ├── 09-outputs.tf
-    └── main.tf
-```
+- ✅ Secure static website hosting with CloudFront and HTTPS
+- 🔒 API Gateway with CORS protection
+- 📝 Student data management (Create & Read operations)
+- 📊 Real-time monitoring with CloudWatch
+- 🚨 Automated alerts via SNS and E-mail
+- 🚀 CI/CD pipeline with GitHub Actions
+
+
+### AWS Services Used
+
+- **Amazon S3**: Hosts the static website
+- **CloudFront**: Provides secure content delivery
+- **API Gateway**: Manages REST API endpoints
+- **Lambda**: Runs serverless business logic
+- **DynamoDB**: Stores student data
+- **CloudWatch**: Monitors application performance
+- **SNS**: Handles alarm notifications
+- **IAM**: Handles Roles and Policies
 
 ## Prerequisites
 
-- AWS account
-- Terraform
-- Python 3.12
+- AWS Account with administrative access
+- [Terraform](https://www.terraform.io/downloads.html) (>= 1.0.0)
+- [Python](https://www.python.org/downloads/) (>= 3.12)
+- [AWS CLI](https://aws.amazon.com/cli/) configured with credentials
 
-### Setup
+## Quick Start
 
-1. **Clone the repository:**
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/yourusername/serverless_app.git
+   cd serverless_app
+   ```
 
-    ```sh
-    git clone https://github.com/yourusername/serverless_app.git
-    cd serverless_app
-    ```
+2. **Set Up Environment Variables**
+   ```bash
+   export AWS_ACCESS_KEY_ID="your_access_key"
+   export AWS_SECRET_ACCESS_KEY="your_secret_key"
+   export AWS_DEFAULT_REGION="us-east-1"
+   ```
 
-2. **Install dependencies:**
+3. **Deploy Infrastructure**
+   ```bash
+   cd terraform
+   terraform init
+   terraform apply -auto-approve
+   ```
 
-    ```sh
-    npm install
-    ```
+4. **Access the Application**
+   - The CloudFront URL will be displayed in the Terraform outputs
+   - Use this URL to access the web interface
 
-3. **Configure AWS credentials:**
+## Development
 
-    Set up your AWS credentials in your environment or use the AWS CLI to configure them.
-
-4. **Initialize Terraform:**
-
-    ```sh
-    cd terraform
-    terraform init
-    ```
-
-## Deployment
-
-1. **Deploy the application:**
-
-    ```sh
-    terraform apply -auto-approve
-    ```
-
-2. **Destroy the application:**
-
-    ```sh
-    terraform destroy -auto-approve
-    ```
-
-## Usage
-
-- **Save Student Data:**
-
-    Use the form on the static website to save student data.
-
-- **View Student Data:**
-
-    Use the "View all Students" button on the static website to retrieve and display all student data.
-
-## Architecture
-
-The application uses the following AWS services:
-- Amazon S3 for static website hosting
-- Amazon CloudFront for secure content delivery
-- Amazon API Gateway for REST API
-- AWS Lambda for serverless computing
-- Amazon DynamoDB for data storage
-- Amazon CloudWatch for monitoring
-
-## Security
-
-The application implements several security measures:
-- CloudFront distribution with HTTPS
-- S3 bucket accessed only through CloudFront
-- API Gateway with CORS configuration
-- IAM roles with least privilege access
-
-## Testing
-
-Run the tests using pytest:
-
-```sh
-pytest ./src/
+### Project Structure
 ```
+.
+├── .github/workflows/    # CI/CD pipeline configurations
+├── src/                 # Lambda function source code
+├── static/              # Web interface files
+├── terraform/           # Infrastructure as code
+└── tests/              # Unit and integration tests
+```
+
+### Adding a New Feature
+
+1. Create a feature branch
+2. Make changes and test locally
+3. Submit a pull request
+4. Automated tests will run via GitHub Actions
+
+## Monitoring and Maintenance
+
+### CloudWatch Dashboards
+- Access performance metrics via AWS Console
+- Monitor Lambda function execution times
+- Track API Gateway requests
+
+### Alerts
+- Error rate exceeds threshold
+- Lambda function failures
+- API Gateway 5XX errors
+
+## Security Features
+
+- 🔐 HTTPS-only access via CloudFront
+- 🛡️ Private S3 bucket with CloudFront origin access identity
+- 🔒 Least privilege IAM roles
+- 🌐 CORS configuration for API endpoints
+- 📝 CloudWatch logging and monitoring
+
+## Deployment Pipeline
+
+1. Push to main branch triggers GitHub Actions
+2. Automated tests run
+3. Infrastructure changes applied via Terraform
+4. Lambda functions updated
+
+## Cleanup
+
+Remove all AWS resources:
+```bash
+cd terraform
+terraform destroy -auto-approve
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## License
 
-This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For issues and feature requests, please create a GitHub issue.

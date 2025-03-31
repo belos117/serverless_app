@@ -7,6 +7,7 @@ on:
     branches: [ main ]
 
 env:
+  TF_LOG: INFO
   AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
   AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
   TERRAFORM_LOGIN: ${{ secrets.TERRAFORM_LOGIN }}
@@ -106,25 +107,68 @@ jobs:
           zip -j insertStudentData.zip insertStudentData.py
           zip -j getStudents.zip getStudents.py            
 
-      - name: Terraform Init
+      - name: Terraform init
+        id: init
         run: |
           cd terraform
           terraform init
 
-      - name: Terraform Plan
+      - name: Terraform fmt
+        id: fmt
         run: |
           cd terraform
-          terraform plan
+          terraform fmt
+
+      - name: Terraform validate
+        id: validate
+        run: |
+          cd terraform
+          terraform validate
+
+      - name: Terraform plan
+        id: plan
+        if: github.event_name == 'pull_request'
+        run: |
+            cd terraform
+            terraform plan -no-color -input=false
+        continue-on-error: true
+    
+      - uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
         env:
-          TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        with:
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+  
+            <details><summary>Show Plan</summary>
+  
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+  
+            </details>
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+  
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+  
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           cd terraform
-          terraform apply -auto-approve
-        env:
-          TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}
+          terraform apply -auto-approve -input=false
 
       - name: Send Terraform Output Email
         if: success() && github.ref == 'refs/heads/main' && github.event_name == 'push'
