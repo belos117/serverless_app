@@ -5,11 +5,12 @@ A secure, scalable serverless application built on AWS for managing student data
 ## Features
 
 - ✅ Secure static website hosting with CloudFront and HTTPS
-- 🔒 API Gateway with CORS protection
+- 📝 Hashicorp Backend to store Terraform state files
+- 🔒 API Gateway with CORS protection 
 - 📝 Student data management (Create & Read operations)
 - 📊 Real-time monitoring with CloudWatch
 - 🚨 Automated alerts via SNS and E-mail
-- 🚀 CI/CD pipeline with GitHub Actions
+- 🚀 CI/CD pipeline with GitHub Actions and integrated DevSecOps best practices
 
 
 ### AWS Services Used
@@ -29,6 +30,7 @@ A secure, scalable serverless application built on AWS for managing student data
 - [Terraform](https://www.terraform.io/downloads.html) (>= 1.0.0)
 - [Python](https://www.python.org/downloads/) (>= 3.12)
 - [AWS CLI](https://aws.amazon.com/cli/) configured with credentials
+- [Hashicorp Cloud](https://app.terraform.io/) for storing terraform state files
 
 ## Quick Start
 
@@ -43,6 +45,7 @@ A secure, scalable serverless application built on AWS for managing student data
    export AWS_ACCESS_KEY_ID="your_access_key"
    export AWS_SECRET_ACCESS_KEY="your_secret_key"
    export AWS_DEFAULT_REGION="us-east-1"
+   export TERRAFORM_LOGIN="your_hccloud_token"
    ```
 
 3. **Deploy Infrastructure**
