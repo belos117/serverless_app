@@ -66,25 +66,25 @@ resource "local_file" "index_html" {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Data</title>
+    <title>Student Programme Data</title>
     <style>
         body {
-            background-color: #f0f0f0; /* Light gray background */
-            color: #333; /* Dark gray text */
-            font-family: Arial, sans-serif; /* Use Arial font */
+            background-color: #f0f0f0; 
+            color: #333; 
+            font-family: Arial, sans-serif; 
         }
 
         h1 {
-            color: #007bff; /* Blue heading text */
+            color:rgb(217, 56, 42); 
         }
 
         .container {
-            max-width: 600px; /* Limit width to 600px */
-            margin: 0 auto; /* Center the container */
-            padding: 20px; /* Add padding */
-            background-color: #fff; /* White background */
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background-color: #fff; 
+            border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
         }
 
         input[type="text"], input[type="submit"] {
@@ -97,13 +97,13 @@ resource "local_file" "index_html" {
         }
 
         input[type="submit"] {
-            background-color: #007bff; /* Blue submit button */
-            color: #fff; /* White text */
-            cursor: pointer; /* Add pointer cursor */
+            background-color: #007bff; 
+            color: #fff; 
+            cursor: pointer; 
         }
 
         input[type="submit"]:hover {
-            background-color: #0056b3; /* Darker blue on hover */
+            background-color: #0056b3; 
         }
 
         table {
@@ -118,7 +118,7 @@ resource "local_file" "index_html" {
         }
 
         th {
-            background-color: #f2f2f2; /* Light gray header background */
+            background-color: #f2f2f2; 
         }
     </style>
 </head>

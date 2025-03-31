@@ -31,7 +31,7 @@ resource "aws_cloudwatch_metric_alarm" "get_students_errors" {
 
 # CloudWatch Dashboard
 resource "aws_cloudwatch_dashboard" "lambda_dashboard" {
-  dashboard_name = "StudentAPI-Dashboard"
+  dashboard_name = var.cloudwatch_dashboard_name
 
   dashboard_body = jsonencode({
     widgets = [

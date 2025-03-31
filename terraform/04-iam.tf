@@ -58,3 +58,27 @@ resource "aws_iam_role_policy" "lambda_logs_policy" {
   })
 }
 
+# SNS Topic Policy
+resource "aws_sns_topic_policy" "alarm_policy" {
+  arn = aws_sns_topic.alarm_notifications.arn
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "cloudwatch.amazonaws.com"
+        }
+        Action = "SNS:Publish"
+        Resource = aws_sns_topic.alarm_notifications.arn
+        Condition = {
+          ArnLike = {
+            "aws:SourceArn": "arn:aws:cloudwatch:${var.aws_region}:${data.aws_caller_identity.current.account_id}:alarm:*"
+          }
+        }
+      }
+    ]
+  })
+}
+

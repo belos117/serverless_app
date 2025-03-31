@@ -7,7 +7,7 @@ resource "aws_dynamodb_table" "student_data" {
   hash_key       = var.dynamodb_hash_key
 
   attribute {
-    name = "studentid"
+    name = var.dynamodb_hash_key
     type = "S"
   }
 }
