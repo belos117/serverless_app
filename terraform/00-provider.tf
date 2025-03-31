@@ -13,10 +13,10 @@ terraform {
 
   cloud {
 
-    organization = var.cloud_organization
+    organization = "henkel_solutions"
 
     workspaces {
-      name = var.cloud_workspace
+      name = "serverless"
     }
   }
 }

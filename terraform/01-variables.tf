@@ -10,15 +10,6 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "cloud_organization" {
-  description = "Cloud organization name"
-  default     = "henkel_solutions"
-}
-
-variable "cloud_workspace" {
-  description = "Cloud workspace name"
-  default     = "serverless"
-}
 
 # Variables for S3
 variable "s3_bucket_name" {
