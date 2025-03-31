@@ -171,7 +171,7 @@ jobs:
         run: exit 1
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'merge_pull_request'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           cd terraform
           terraform apply -auto-approve -input=false
