@@ -50,6 +50,12 @@ jobs:
         terraform_wrapper: false
         cli_config_credentials_token: ${{ secrets.TERRAFORM_LOGIN }}
 
+    - name: Terraform init
+      id: init
+      run: |
+        cd terraform
+        terraform init
+
     - name: Terraform Destroy
       run: |
         cd terraform
