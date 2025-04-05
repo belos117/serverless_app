@@ -28,7 +28,7 @@ def send_destroy_notification(recipient, environment):
     All AWS resources have been successfully destroyed.
     
     Resources cleaned up:
-    - S3 Bucket and static website content
+    - S3 Buckets, static website content and Cloudtrail logs
     - CloudFront distribution
     - API Gateway endpoints
     - Lambda functions
@@ -36,6 +36,7 @@ def send_destroy_notification(recipient, environment):
     - IAM roles and policies
     - CloudWatch alarms
     - SNS topics
+    - Cloudtrail logs
     
     This is an automated message.
     """

@@ -1,6 +1,6 @@
 # Serverless Student Management System
 
-A secure, scalable serverless application built on AWS for managing student data. The application provides a web interface for saving and retrieving student information, with automated deployment using GitHub Actions and infrastructure as code using Terraform.
+A secure, scalable serverless application built on AWS for managing student data. The sample application provides a web interface for saving and retrieving student information, with automated deployment using GitHub Actions and infrastructure as code using Terraform.
 
 ### Features
 
@@ -11,6 +11,7 @@ A secure, scalable serverless application built on AWS for managing student data
 - 📊 Real-time monitoring with CloudWatch
 - 🚨 Automated alerts via SNS and E-mail
 - 🚀 CI/CD pipeline with GitHub Actions and integrated DevSecOps best practices
+- 📊 Cloudtrail for log generation
 
 
 ### AWS Services Used
@@ -23,6 +24,7 @@ A secure, scalable serverless application built on AWS for managing student data
 - **CloudWatch**: Monitors application performance
 - **SNS**: Handles alarm notifications
 - **IAM**: Handles Roles and Policies
+- **Cloudtrail**: Handles logs generation
 
 ## Prerequisites
 
@@ -52,11 +54,12 @@ A secure, scalable serverless application built on AWS for managing student data
    ```bash
    cd terraform
    terraform init
+   terraform plan
    terraform apply -auto-approve
    ```
 
 4. **Access the Application**
-   - The CloudFront URL will be displayed in the Terraform outputs
+   - The CloudFront URL will be displayed in the Terraform outputs and sent to the email address provided if set
    - Use this URL to access the web interface
 
 ## Development
@@ -64,11 +67,12 @@ A secure, scalable serverless application built on AWS for managing student data
 ### Project Structure
 ```
 .
-├── .github/workflows/    # CI/CD pipeline configurations
+├── .github/workflows/   # CI/CD pipeline configurations for deploy and destroy
+├── scripts/             # Python scripts for email notification
 ├── src/                 # Lambda function source code
 ├── static/              # Web interface files
 ├── terraform/           # Infrastructure as code
-└── tests/              # Unit and integration tests
+└── tests/               # Unit and integration tests
 ```
 
 ### Adding a New Feature
@@ -96,14 +100,14 @@ A secure, scalable serverless application built on AWS for managing student data
 - 🛡️ Private S3 bucket with CloudFront origin access identity
 - 🔒 Least privilege IAM roles
 - 🌐 CORS configuration for API endpoints
-- 📝 CloudWatch logging and monitoring
+- 📝 CloudWatch & Cloudtrail logging and monitoring
+
 
 ## Deployment Pipeline
 
 1. Push to main branch triggers GitHub Actions
 2. Automated tests run
 3. Infrastructure changes applied via Terraform
-4. Lambda functions updated
 
 ## Cleanup
 
@@ -112,6 +116,9 @@ Remove all AWS resources:
 cd terraform
 terraform destroy -auto-approve
 ```
+OR
+
+Use the tfdestroy.yml included to tear down the infrastructure in a pipeline with the keyword 'destroy'
 
 ## Contributing
 
