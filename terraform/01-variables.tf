@@ -10,7 +10,6 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-
 # Variables for S3
 variable "s3_bucket_name" {
   description = "Name of the S3 bucket"
@@ -125,5 +124,13 @@ variable "alarm_email" {
   description = "Email address for alarm notifications"
   type        = string
   default     = "belos117@gmail.com"
+}
+
+# Variables for CloudTrail
+
+variable "project_name" {
+  description = "Name of the project"
+  type        = string
+  default     = "student-management"
 }
 

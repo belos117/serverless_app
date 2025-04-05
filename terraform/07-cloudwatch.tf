@@ -1,4 +1,3 @@
-# CloudWatch Alarms for Lambda Functions
 resource "aws_cloudwatch_metric_alarm" "insert_student_data_errors" {
   alarm_name          = "InsertStudentDataErrors"
   comparison_operator = "GreaterThanThreshold"
@@ -29,7 +28,6 @@ resource "aws_cloudwatch_metric_alarm" "get_students_errors" {
   }
 }
 
-# CloudWatch Dashboard
 resource "aws_cloudwatch_dashboard" "lambda_dashboard" {
   dashboard_name = var.cloudwatch_dashboard_name
 
@@ -89,4 +87,9 @@ resource "aws_cloudwatch_dashboard" "lambda_dashboard" {
       }
     ]
   })
+}
+
+resource "aws_cloudwatch_log_group" "cloudtrail_log_group" {
+  name              = "/aws/cloudtrail/${var.project_name}"
+  retention_in_days = 30
 }

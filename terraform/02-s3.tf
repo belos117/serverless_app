@@ -6,7 +6,7 @@ resource "aws_s3_bucket" "static_website" {
 resource "aws_s3_bucket_ownership_controls" "bucket_ownership_controls" {
   bucket = aws_s3_bucket.static_website.id
   rule {
-    object_ownership = "BucketOwnerEnforced"  # Changed from BucketOwnerPreferred
+    object_ownership = "BucketOwnerEnforced"  
   }
 }
 
@@ -25,31 +25,6 @@ resource "aws_s3_bucket_website_configuration" "website_configuration" {
   index_document {
     suffix = "index.html"
   }
-}
-
-resource "aws_s3_bucket_policy" "static_website_policy" {
-  depends_on = [aws_s3_bucket_public_access_block.public_access_block]
-  bucket = aws_s3_bucket.static_website.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Sid       = "AllowCloudFrontAccess"
-        Effect    = "Allow"
-        Principal = {
-          Service = "cloudfront.amazonaws.com"
-        }
-        Action   = "s3:GetObject"
-        Resource = "${aws_s3_bucket.static_website.arn}/*"
-        Condition = {
-          StringEquals = {
-            "AWS:SourceArn" = aws_cloudfront_distribution.s3_distribution.arn
-          }
-        }
-      }
-    ]
-  })
 }
 
 resource "aws_s3_bucket_versioning" "static_website_versioning" {
@@ -175,7 +150,7 @@ EOT
   filename = "../static/index.html"
 }
 
-# Upload HTML file
+
 resource "aws_s3_object" "html" {
   bucket       = aws_s3_bucket.static_website.id
   key          = "index.html"
@@ -183,7 +158,6 @@ resource "aws_s3_object" "html" {
   content_type = "text/html"
 }
 
-# Generate JavaScript file with API endpoint
 resource "local_file" "scripts_js" {
   content  = <<-EOT
 const API_ENDPOINT = "${aws_api_gateway_stage.gateway_stage.invoke_url}/student";
@@ -242,10 +216,31 @@ EOT
   filename = "../static/scripts.js"
 }
 
-# Update S3 object for JavaScript file to depend on the generated file
 resource "aws_s3_object" "javascript" {
   bucket       = aws_s3_bucket.static_website.id
   key          = "scripts.js"
   source       = local_file.scripts_js.filename
   content_type = "application/javascript"
+}
+
+resource "aws_s3_bucket" "cloudtrail_logs" {
+  bucket        = "${var.project_name}-cloudtrail-logs-${data.aws_caller_identity.current.account_id}"
+  force_destroy = true
+}
+
+resource "aws_s3_bucket_versioning" "cloudtrail_bucket_versioning" {
+  bucket = aws_s3_bucket.cloudtrail_logs.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "cloudtrail_encryption" {
+  bucket = aws_s3_bucket.cloudtrail_logs.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
 }
