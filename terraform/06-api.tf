@@ -85,7 +85,7 @@ resource "aws_api_gateway_integration_response" "options_integration_response" {
   }
 }
 
-# POST method response - update with complete CORS headers
+# POST method response - update with CORS headers
 resource "aws_api_gateway_method_response" "post_200" {
   rest_api_id = aws_api_gateway_rest_api.student_api.id
   resource_id = aws_api_gateway_resource.student_resource.id
@@ -99,7 +99,7 @@ resource "aws_api_gateway_method_response" "post_200" {
   }
 }
 
-# GET method response - update with complete CORS headers
+# GET method response - update with CORS headers
 resource "aws_api_gateway_method_response" "get_200" {
   rest_api_id = aws_api_gateway_rest_api.student_api.id
   resource_id = aws_api_gateway_resource.student_resource.id
@@ -113,7 +113,7 @@ resource "aws_api_gateway_method_response" "get_200" {
   }
 }
 
-# Add POST integration response
+# POST integration response
 resource "aws_api_gateway_integration_response" "post_integration_response" {
   rest_api_id = aws_api_gateway_rest_api.student_api.id
   resource_id = aws_api_gateway_resource.student_resource.id
@@ -131,7 +131,7 @@ resource "aws_api_gateway_integration_response" "post_integration_response" {
   ]
 }
 
-# Add GET integration response
+# GET integration response
 resource "aws_api_gateway_integration_response" "get_integration_response" {
   rest_api_id = aws_api_gateway_rest_api.student_api.id
   resource_id = aws_api_gateway_resource.student_resource.id
