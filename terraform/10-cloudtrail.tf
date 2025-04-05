@@ -1,4 +1,9 @@
 resource "aws_cloudtrail" "main" {
+  depends_on = [
+    aws_s3_bucket_policy.cloudtrail_bucket_policy,
+    aws_s3_bucket.cloudtrail_logs
+  ]
+
   name                          = "${var.project_name}-trail"
   s3_bucket_name               = aws_s3_bucket.cloudtrail_logs.id
   include_global_service_events = true
@@ -13,11 +18,6 @@ resource "aws_cloudtrail" "main" {
       type   = "AWS::Lambda::Function"
       values = ["arn:aws:lambda"]
     }
-
-    data_resource {
-      type   = "AWS::S3::Object"
-      values = ["${aws_s3_bucket.static_website.arn}/"]
-    }
   }
 
   cloud_watch_logs_group_arn = "${aws_cloudwatch_log_group.cloudtrail_log_group.arn}:*"
@@ -28,6 +28,3 @@ resource "aws_cloudtrail" "main" {
     Project     = var.project_name
   }
 }
-
-
-
